@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title><%= book.title %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        #currentDateTime, #ip-address {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div id="currentDateTime"></div>
+            <div id="ip-address"></div>
+
+            <h1><%= book.title %></h1>
+            <h2>Update Book Exchange Entry</h2>
+
+            <form action="/books/update/<%= book._id %>" method="POST">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" name="title" value="<%= book.title %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" class="form-control" id="author" name="author" value="<%= book.author %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea class="form-control" id="description" name="description" rows="4"><%= book.description %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="exchangeType" class="form-label">Exchange Type:</label>
+                    <select class="form-control" id="exchangeType" name="exchangeType">
+                        <option value="borrow" <% if (book.exchangeType==='borrow' ) { %> selected <% } %>>Borrow</option>
+                        <option value="trade" <% if (book.exchangeType==='trade' ) { %> selected <% } %>>Trade</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status" class="form-label">Status:</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="available" <% if (book.status==='available' ) { %> selected <% } %>>Available</option>
+                        <option value="unavailable" <% if (book.status==='unavailable' ) { %> selected <% } %>>Unavailable</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+
+            <form action="/books/delete/<%= book._id %>" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="btn btn-danger mt-3">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const dateTimeElement = document.getElementById('currentDateTime');
+        const currentDateTime = new Date().toLocaleString();
+
+        dateTimeElement.textContent = "Current Date and Time: " + currentDateTime;
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').textContent = "Your IP Address: " + data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+            });
+    </script>
+</body>
+
+</html>

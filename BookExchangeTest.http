@@ -1,0 +1,54 @@
+@token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjQxM2E3M2YyNGE5MjQwM2Q4Y2YwNCIsImlhdCI6MTcxMzY0NzUyOCwiZXhwIjoxNzE0NTExNTI4fQ.S6cBmStiFrhRVsjQKU-0WAHeDVxpSABU7MpWR5kICUo"
+@baseUrl = http://localhost:4000
+
+POST http://localhost:4000/users/login
+Content-Type: application/json
+
+{
+    "email":"asu@gmail.com",
+    "password":"123456789"
+}
+
+
+
+### Test: Add a new book
+POST http://localhost:4000/books/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "description": "Classic tale of wealth, ambition, and lost love set in the Roaring Twenties.",
+    "exchangeType": "trade",
+    "status": "available"
+  }
+
+
+
+
+### Get all books
+GET http://localhost:4000/books/
+Content-Type: application/json
+
+### Get specific book exchange
+GET http://localhost:4000/books/66254372f071d7851b74ec22
+Content-Type: application/json
+
+### Test: Update existing book
+PUT  http://localhost:4000/books/update/66254372f071d7851b74ec22
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "description": "Dystopian novel depicting a totalitarian regime and the struggle for freedom.",
+    "exchangeType": "borrow",
+    "status": "unavailable"
+  }
+
+
+### Test: Delete a book exchange by ID
+DELETE http://localhost:4000/books/delete/66254372f071d7851b74ec22
+Content-Type: application/json
