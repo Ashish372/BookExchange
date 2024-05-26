@@ -12,7 +12,7 @@ Welcome to the Book Exchange Platform, a Node.js application that facilitates bo
 ## Getting Started
 
 1. **Installation**:
-   - Clone the repository: `git clone <repository-url>`
+   - Clone the repository: `git clone https://github.com/Ashish372/BookExchange.git`
    - Install dependencies: `npm install`
 
 2. **Configuration**:
